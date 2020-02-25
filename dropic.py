@@ -7,8 +7,9 @@
 
 """
 
-import os
 import shutil as sh
+from os      import mkdir, rmdir
+from sys     import exit
 from pathlib import Path
 
 home = str(Path.home())
@@ -34,9 +35,9 @@ f.close()
 print('Dropbox version:', version)
 img_dir = img_dir.replace('{{VERSION}}', version);
 
-print('Backuping original icons... ', end='')
+print('Backup original icons... ', end='')
 try:
-	os.mkdir(img_dir + '/backup', mode=0o755)
+	mkdir(img_dir + '/backup', mode=0o755)
 except FileExistsError as e:
 	print('(backup directory already exists)', end=' - ')
 
@@ -46,21 +47,20 @@ try:
 	print('OK')
 except Exception as e:
 	print("Can't move icons to backup! - Fail!")
-	os._exit(1)
+	exit(1)
 
 
-print('Copiing new icons... ', end='')
+print('Copy new icons... ', end='')
 try:
 
 	for item in files:
 		sh.copy(src_dir + '/' + item, img_dir)
-	#print('copy ', img_dir + '/' + item, img_dir + '/backup/' + item)
 	print('OK')
 
 except Exception as e:
 
 	print("Can't copy new icons! - Fail!")
-	print('Restoring original icons... ', end='')
+	print('Restore original icons... ', end='')
 	try:
 		for item in files:
 			sh.move(img_dir + '/backup/' + item, img_dir + '/' + item)
@@ -68,12 +68,12 @@ except Exception as e:
 	except Exception as e:
 		print("Can't restore icons from backup! - Fail!")
 		print("Please restore them handly:", img_dir + '/backup')
-		os._exit(1)
+		exit(1)
 
 	print('Delete backup directory... ', end='')
 	try:
-		os.rmdir(img_dir + '/backup/')
+		rmdir(img_dir + '/backup/')
 		print('OK')
 	except Exception as e:
 		print("Can't delete backup directory! - Fail!")
-		os._exit(1)
+		exit(1)
