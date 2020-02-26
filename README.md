@@ -1,6 +1,8 @@
 # dropic
 Change original [Dropbox](https://dropbox.com) icons for better visibility
 
+![dropic](dropic.png)
+
 ## NAME
 
 What is `DROPIC` means? **DROP**box + **IC**ons
