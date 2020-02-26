@@ -1,5 +1,5 @@
 # dropic
-Change Dopbox icons for better visibility
+Change original [Dropbox](https://dropbox.com) icons for better visibility
 
 ## NAME
 
